@@ -8,12 +8,19 @@ class App extends Component {
     this.state = {
       task: {
         text: '',
-        id: uniqid()
+        id: uniqid(),
+        number: 1
       },
       taskArray: []
     };
     this.onClickBtn = this.onClickBtn.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.remove = this.remove.bind(this);
+  }
+  remove(e) {
+    const id = e.target.value;
+    const tasks = this.state.taskArray.filter((task) => task.id !== id);
+    this.setState({ taskArray: tasks });
   }
 
   onClickBtn(event) {
@@ -22,17 +29,18 @@ class App extends Component {
       taskArray: this.state.taskArray.concat(this.state.task),
       task: {
         text: '',
-        id: uniqid()
+        id: uniqid(),
+        number: this.state.task.number + 1
       }
     });
-    console.log(this.state.taskArray);
   }
 
   handleChange(event) {
     this.setState({
       task: {
         text: event.target.value,
-        id: this.state.task.id
+        id: this.state.task.id,
+        number: this.state.task.number
       }
     });
   }
@@ -48,7 +56,7 @@ class App extends Component {
           ></input>
           <input type="submit" value="Submit"></input>
         </form>
-        <Overview tasks={this.state.taskArray} />
+        <Overview remove={this.remove} tasks={this.state.taskArray} />
       </div>
     );
   }

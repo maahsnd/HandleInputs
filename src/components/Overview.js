@@ -2,10 +2,21 @@ import React from 'react';
 
 const Overview = (props) => {
   const { tasks } = props;
+
   return (
     <ul>
       {tasks.map((task) => {
-        return <li key={task.id}>{task.text}</li>;
+        return (
+          <div key={task.id}>
+            <li>
+              {task.number + ': '}
+              {task.text}
+            </li>
+            <button value={task.id} onClick={props.remove}>
+              Delete
+            </button>
+          </div>
+        );
       })}
     </ul>
   );
