@@ -1,55 +1,55 @@
-/* 
-render an input field and a submit button
-handle input field with the logic
-submit button adds content from input to 
-"tasks array" that is managed in state
-*/
 import React, { Component } from 'react';
 import Overview from './components/Overview';
+import uniqid from 'uniqid';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      taskArray: [],
-      value: '',
-      keyCount: 0
+      task: {
+        text: '',
+        id: uniqid()
+      },
+      taskArray: []
     };
     this.onClickBtn = this.onClickBtn.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   onClickBtn(event) {
-    console.log(event.target[0].value);
-    this.setState((prevState) => ({
-      keyCount: parseInt(prevState.keyCount) + 1,
-      taskArray: [
-        ...prevState.taskArray,
-        {
-          task: event.target[0].value,
-          key: this.state.keyCount
-        }
-      ]
-    }));
-    console.log(this.state.taskArray);
     event.preventDefault();
+    this.setState({
+      taskArray: this.state.taskArray.concat(this.state.task),
+      task: {
+        text: '',
+        id: uniqid()
+      }
+    });
+    console.log(this.state.taskArray);
   }
 
   handleChange(event) {
-    this.setState({ value: event.target.value });
+    this.setState({
+      task: {
+        text: event.target.value,
+        id: this.state.task.id
+      }
+    });
   }
 
   render() {
     return (
-      <form onSubmit={this.onClickBtn}>
-        <input
-          type="text"
-          value={this.state.value}
-          onChange={this.handleChange}
-        ></input>
-        <input type="submit" value="Submit"></input>
-        <Overview taskarray={this.state.taskArray} />
-      </form>
+      <div>
+        <form onSubmit={this.onClickBtn}>
+          <input
+            type="text"
+            value={this.state.task.text}
+            onChange={this.handleChange}
+          ></input>
+          <input type="submit" value="Submit"></input>
+        </form>
+        <Overview tasks={this.state.taskArray} />
+      </div>
     );
   }
 }
