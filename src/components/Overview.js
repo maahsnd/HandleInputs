@@ -15,6 +15,9 @@ const Overview = (props) => {
             <button value={task.id} onClick={props.remove}>
               Delete
             </button>
+            <button value={task.id} onClick={props.edit}>
+              Edit
+            </button>
           </div>
         );
       })}

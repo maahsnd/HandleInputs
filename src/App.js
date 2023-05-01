@@ -16,7 +16,11 @@ class App extends Component {
     this.onClickBtn = this.onClickBtn.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.remove = this.remove.bind(this);
+    this.edit = this.edit.bind(this);
   }
+
+  edit(e) {}
+
   remove(e) {
     const id = e.target.value;
     const tasks = this.state.taskArray.filter((task) => task.id !== id);
@@ -56,7 +60,11 @@ class App extends Component {
           ></input>
           <input type="submit" value="Submit"></input>
         </form>
-        <Overview remove={this.remove} tasks={this.state.taskArray} />
+        <Overview
+          remove={this.remove}
+          edit={this.edit}
+          tasks={this.state.taskArray}
+        />
       </div>
     );
   }
